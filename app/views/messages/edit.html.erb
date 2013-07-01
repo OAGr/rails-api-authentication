@@ -1,0 +1,6 @@
+<h1>Editing message</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', room_message_path(@message.room, @message) %> |
+<%= link_to 'Back', room_messages_path(@message.room) %>
