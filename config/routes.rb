@@ -1,4 +1,9 @@
 Messager::Application.routes.draw do
+  namespace :api, defaults: {format: 'json'} do
+    resources :rooms do
+      resources :messages
+    end
+  end
 
   resources :rooms do
     resources :messages
