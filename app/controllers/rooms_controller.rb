@@ -14,6 +14,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1.json
   def show
     @room = Room.find(params[:id])
+    @user = @room.user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -41,6 +42,7 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = Room.new(params[:room])
+    @room.user = current_user
 
     respond_to do |format|
       if @room.save

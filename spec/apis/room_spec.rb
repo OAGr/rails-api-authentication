@@ -82,7 +82,6 @@ describe Api::RoomsController, :type => :api do
       response_message = JSON.parse(last_response.body)
       response_message["errors"].should == {"name"=>["has already been taken"]}
     end
-
   end
 
 end

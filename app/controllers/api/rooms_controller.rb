@@ -7,10 +7,12 @@ module Api
     end
 
     def show
-      @room = Room.find(params[:id])
-      respond_with Room.find(params[:id])
-    rescue
-      error(404, 404, "Room #{params[:id]} does not exist.")
+      begin
+        @room = Room.find(params[:id])
+        respond_with Room.find(params[:id])
+      rescue
+        error(404, 404, "Room #{params[:id]} does not exist.")
+      end
     end
 
     def create

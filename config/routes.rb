@@ -1,5 +1,10 @@
 Messager::Application.routes.draw do
+  devise_for :users
+
+  root :to => "rooms#index"
+
   namespace :api, defaults: {format: 'json'} do
+    devise_for :users
     resources :rooms do
       resources :messages
     end
