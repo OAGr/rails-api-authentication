@@ -1,5 +1,5 @@
 module Api
-  class SessionsController < DeviseController
+  class SessionsController < ApplicationController
     prepend_before_filter :require_no_authentication, :only => [:create ]
     #before_filter :ensure_params_exist
     respond_to :json
@@ -18,7 +18,6 @@ module Api
     end
 
     def destroy
-      binding.pry
       resource = User.find_for_database_authentication( email: params[:email] )
       if sign_out(resource)
       render :json => {:message=>"Session deleted."}, :success => true, :status => :ok

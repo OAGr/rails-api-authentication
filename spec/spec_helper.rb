@@ -37,4 +37,14 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.include ApiHelper, :type => :api #apply to all spec for apis folder
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end

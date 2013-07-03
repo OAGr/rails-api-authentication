@@ -7,7 +7,7 @@ module Api
       user = User.new(params[:registration])
       
       if user.save
-        render :json=> user.as_json(:email=>user.email), :status=>201
+        render :json=> user.as_json, :status=>201
         return
       else
         warden.custom_failure!

@@ -24,9 +24,11 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  #gem 'rack-test'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'rspec_api_test'
   gem 'pry'
+  gem 'database_cleaner'
 end
 
 gem 'jquery-rails'
