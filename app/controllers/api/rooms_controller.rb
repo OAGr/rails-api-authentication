@@ -44,7 +44,6 @@ module Api
     end
 
     def authorize_user!
-      binding.pry
       if Room.find(params[:id]).user_id == params[:user_id].to_i
         true
       else

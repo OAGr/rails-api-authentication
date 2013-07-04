@@ -2,31 +2,49 @@ require 'spec_helper'
 require 'pry'
 describe Api::SessionsController, :type => :api do
 
-  describe "#create" do
-
-    describe "with correct payload" do
-      before do
-        request_payload = {
-          registration: {
+  describe '#create' do
+    before do
+      request_payload = {
+        registration: {
           name: 'John Swartz',
           password: 'pass123456',
           password_confirmation: 'pass123456',
           email: 'John@gmail.com'}
-        }
-        binding.pry
-        post 'api/users', request_payload
-        response = last_response
-        @body = JSON.parse(last_response.body)
-      end
-
-      it {last_response.status.should == 201}
-      it "has the correct details" do
-        @body.name.should == 'John Swartz'
-        @body.email.should == 'John@gmail.com'
-        @body.id.should == 1
-      end
-
+      }
+      post 'api/users', request_payload
+      @registration_response = last_response
+      @registration = JSON.parse(last_response.body)
+      @user = User.first
     end
-  end
 
+    describe 'with correct user' do
+      it "login with correct credentials" do
+        request_payload = {
+          password: 'pass123456',
+          email: 'John@gmail.com'
+        }
+        post 'api/users/sign_in', request_payload
+        body = JSON.parse(last_response.body)
+        last_response.status.should == 201
+        body["auth_token"].should == @user.authentication_token
+        body["id"].should == @user.id
+        body["email"].should == @user.email
+      end
+    end
+
+    describe 'with incorrect user' do
+      it "gives error with wrong credentials" do
+        request_payload = {
+          password: 'wrongpassword',
+          email: 'John@gmail.com'
+        }
+        post 'api/users/sign_in', request_payload
+        body = JSON.parse(last_response.body)
+        last_response.status.should == 401
+        body["success"].should == false
+        body["message"].should == "Error with your login or password"
+      end
+    end
+
+  end 
 end

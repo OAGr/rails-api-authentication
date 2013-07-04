@@ -13,7 +13,6 @@ describe Api::RegistrationsController, :type => :api do
           password_confirmation: 'pass123456',
           email: 'John@gmail.com'}
         }
-        binding.pry
         post 'api/users', request_payload
         response = last_response
         @body = JSON.parse(last_response.body)
@@ -21,9 +20,9 @@ describe Api::RegistrationsController, :type => :api do
 
       it {last_response.status.should == 201}
       it "has the correct details" do
-        @body.name.should == 'John Swartz'
-        @body.email.should == 'John@gmail.com'
-        @body.id.should == 1
+        @body["name"].should == 'John Swartz'
+        @body["email"].should == 'john@gmail.com'
+        @body["id"].should == 1
       end
 
     end
