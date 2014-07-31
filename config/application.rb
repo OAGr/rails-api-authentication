@@ -58,5 +58,25 @@ module Messager
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Rack CORS middleware
+    config.middleware.use Rack::Cors do
+      allow do
+        origins 'localhost:3000', '127.0.0.1:3000',
+                '127.0.0.1:9000', 'localhost:9000',
+                /http:\/\/192\.168\.0\.\d{1,3}(:\d+)?/
+                # regular expressions can be used here
+
+        resource '*', 
+        :headers => :any, 
+        :methods => [:get, :post, :delete, :put, :options]
+      end
+
+      allow do
+        origins '*'
+        resource '/public/*', :headers => :any, :methods => :get
+      end
+    end
+
   end
 end
